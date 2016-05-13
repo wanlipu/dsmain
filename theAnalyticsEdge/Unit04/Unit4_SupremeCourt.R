@@ -25,6 +25,7 @@ StevensTree = rpart(Reverse ~ Circuit + Issue + Petitioner + Respondent + LowerC
 
 prp(StevensTree)
 
+
 # Make predictions
 PredictCART = predict(StevensTree, newdata = Test, type = "class")
 table(Test$Reverse, PredictCART)
