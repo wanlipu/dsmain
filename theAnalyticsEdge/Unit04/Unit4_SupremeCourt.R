@@ -24,7 +24,7 @@ library(rpart.plot)
 StevensTree = rpart(Reverse ~ Circuit + Issue + Petitioner + Respondent + LowerCourt + Unconst, data = Train, method="class", minbucket=25)
 
 prp(StevensTree)
-
+summary(StevensTree)
 # Make predictions
 PredictCART = predict(StevensTree, newdata = Test, type = "class")
 table(Test$Reverse, PredictCART)
@@ -40,6 +40,29 @@ pred = prediction(PredictROC[,2], Test$Reverse)
 perf = performance(pred, "tpr", "fpr")
 plot(perf)
 
+as.numeric(performance(pred, "auc")@y.values)
+
+# CART model with smaller bucket
+StevensTree2 = rpart(Reverse ~ Circuit + Issue + Petitioner + Respondent + LowerCourt + Unconst, data = Train, method="class", minbucket=5)
+
+prp(StevensTree2)
+summary(StevensTree2)
+
+StevensTree3 = rpart(Reverse ~ Circuit + Issue + Petitioner + Respondent + LowerCourt + Unconst, data = Train, method="class", minbucket=100)
+
+prp(StevensTree3)
+summary(StevensTree3)
+
+# ROC curve
+library(ROCR)
+
+PredictROC2 = predict(StevensTree2, newdata = Test)
+PredictROC2
+
+pred2 = prediction(PredictROC2[,2], Test$Reverse)
+perf2 = performance(pred2, "tpr", "fpr")
+plot(perf2)
+
 # VIDEO 5 - Random Forests
 
 # Install randomForest package
@@ -53,13 +76,17 @@ StevensForest = randomForest(Reverse ~ Circuit + Issue + Petitioner + Respondent
 Train$Reverse = as.factor(Train$Reverse)
 Test$Reverse = as.factor(Test$Reverse)
 
+summary(Train)
+
 # Try again
+set.seed(200)
 StevensForest = randomForest(Reverse ~ Circuit + Issue + Petitioner + Respondent + LowerCourt + Unconst, data = Train, ntree=200, nodesize=25 )
 
 # Make predictions
 PredictForest = predict(StevensForest, newdata = Test)
+PredictForest
 table(Test$Reverse, PredictForest)
-(40+74)/(40+37+19+74)
+(44+76)/(40+37+19+74)
 
 
 
@@ -80,6 +107,8 @@ train(Reverse ~ Circuit + Issue + Petitioner + Respondent + LowerCourt + Unconst
 
 # Create a new CART model
 StevensTreeCV = rpart(Reverse ~ Circuit + Issue + Petitioner + Respondent + LowerCourt + Unconst, data = Train, method="class", cp = 0.18)
+summary(StevensTreeCV)
+prp(StevensTreeCV)
 
 # Make predictions
 PredictCV = predict(StevensTreeCV, newdata = Test, type = "class")
