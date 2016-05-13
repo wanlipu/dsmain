@@ -25,7 +25,6 @@ StevensTree = rpart(Reverse ~ Circuit + Issue + Petitioner + Respondent + LowerC
 
 prp(StevensTree)
 
-
 # Make predictions
 PredictCART = predict(StevensTree, newdata = Test, type = "class")
 table(Test$Reverse, PredictCART)
@@ -40,8 +39,6 @@ PredictROC
 pred = prediction(PredictROC[,2], Test$Reverse)
 perf = performance(pred, "tpr", "fpr")
 plot(perf)
-
-
 
 # VIDEO 5 - Random Forests
 
