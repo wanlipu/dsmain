@@ -71,3 +71,9 @@ prp(CARTmodel5, digits = 6)
 # Going back to logistic regression now, create a model using "sex" and "control". Interpret the coefficient for "sex"
 gerberLogit.control.sex = glm(voting ~ control + sex, data = gerber, family = "binomial")
 summary(gerberLogit.control.sex)
+
+# problem 3.4 Interaction Terms 
+Possibilities = data.frame(sex=c(0,0,1,1),control=c(0,1,0,1))
+Possibilities
+LogModelSex = glm(voting ~ sex + control, data = gerber, family = "binomial")
+predict(LogModelSex, newdata=Possibilities, type="response")
