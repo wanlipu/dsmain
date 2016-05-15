@@ -77,3 +77,10 @@ Possibilities = data.frame(sex=c(0,0,1,1),control=c(0,1,0,1))
 Possibilities
 LogModelSex = glm(voting ~ sex + control, data = gerber, family = "binomial")
 predict(LogModelSex, newdata=Possibilities, type="response")
+
+# problem 3.5 - Interaction Terms 
+LogModel2 = glm(voting ~ sex + control + sex:control, data=gerber, family="binomial")
+summary(LogModel2)
+
+# Problem 3.6 - Interaction Terms 
+predict(LogModel2, newdata=Possibilities, type="response")
