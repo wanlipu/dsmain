@@ -2,6 +2,8 @@
 
 # Read in the data
 NBA = read.csv("NBA_train.csv")
+NBA_test = read.csv("NBA_test.csv")
+
 str(NBA)
 
 
@@ -26,6 +28,28 @@ summary(WinsReg)
 # Linear regression model for points scored
 PointsReg = lm(PTS ~ X2PA + X3PA + FTA + AST + ORB + DRB + TOV + STL + BLK, data=NBA)
 summary(PointsReg)
+summary.lm(PointsReg)
+
+
+
+
+################################
+################
+#Analysis of Variance Table
+anova(PointsReg)
+#Confidence interval for model parameters
+confint(PointsReg) # default level = 0.95
+confint(PointsReg, level = .95)
+confint(PointsReg, level = .90)
+confint(PointsReg, level = .999)
+confint(PointsReg, level = .5)
+
+predict(PointsReg) #Obtain predicted values for training data
+predict(PointsReg, newdata = NBA_test) #Obtain predicted values for test data
+
+
+###############
+################################
 
 # Sum of Squared Errors
 PointsReg$residuals
