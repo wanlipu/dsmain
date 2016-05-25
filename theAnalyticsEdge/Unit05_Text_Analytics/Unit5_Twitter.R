@@ -50,6 +50,7 @@ corpus = tm_map(corpus, PlainTextDocument)
 
 corpus = tm_map(corpus, removePunctuation)
 
+
 corpus[[1]]
 
 # Look at stop words 
@@ -85,6 +86,8 @@ inspect(frequencies[1000:1005,505:515])
 # Check for sparsity
 
 findFreqTerms(frequencies, lowfreq=20)
+findFreqTerms(frequencies, lowfreq=100)
+
 
 # Remove sparse terms
 
@@ -130,6 +133,7 @@ prp(tweetCART)
 # Evaluate the performance of the model
 predictCART = predict(tweetCART, newdata=testSparse, type="class")
 
+
 table(testSparse$Negative, predictCART)
 
 # Compute accuracy
@@ -158,3 +162,8 @@ table(testSparse$Negative, predictRF)
 # Accuracy:
 (293+21)/(293+7+34+21)
 
+
+tweetLog = glm(Negative ~., data = trainSparse, family = "binomial")
+predictions = predict(tweetLog, newdata=testSparse, type="response")
+table(testSparse$Negative, predictions>=0.5)
+(253+33)/nrow(testSparse)
