@@ -21,6 +21,18 @@ movies$IMDB = NULL
 # Remove duplicates
 movies = unique(movies)
 
+# comedies
+sum(movies$Comedy)
+sum(movies$Western)
+sum(movies[movies$Romance == 1, "Drama"])
+
+table(movies$Comedy)
+
+table(movies$Western)
+
+table(movies$Romance, movies$Drama)
+
+
 # Take a look at our data again:
 str(movies)
 
@@ -61,3 +73,9 @@ cluster2 = subset(movies, clusterGroups==2)
 # Look at the first 10 titles in this cluster:
 cluster2$Title[1:10]
 
+
+clusterGroups_2 = cutree(clusterMovies, k = 2)
+cluster2_1 = subset(movies, clusterGroups_2==1)
+cluster2_2 = subset(movies, clusterGroups_2==2)
+summary(cluster2_1)
+summary(cluster2_2)
