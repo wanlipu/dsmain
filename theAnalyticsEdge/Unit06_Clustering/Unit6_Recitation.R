@@ -20,7 +20,6 @@ str(flowerVector2)
 distance = dist(flowerVector, method = "euclidean")
 
 
-
 # Video 3
 
 # Hierarchical clustering
