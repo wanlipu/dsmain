@@ -84,3 +84,7 @@ ggplot(WHO, aes(x = log(FertilityRate), y = Under15)) + geom_point() + stat_smoo
 # Change the color of the regression line:
 ggplot(WHO, aes(x = log(FertilityRate), y = Under15)) + geom_point() + stat_smooth(method = "lm", colour = "orange")
 
+
+ggplot(WHO, aes(x = FertilityRate, y = Under15, color = Region)) + geom_point() + scale_color_brewer(palette="Dark2") 
+
+
