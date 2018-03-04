@@ -22,7 +22,7 @@ INPUT_LAYER = 11
 HIDDEN_LAYER = 10
 OUTPUT_LAYER = 1
 TRAINING_ITERATIONS = 1001
-OUTFILE = 'BACKPROP_LOG.txt'
+OUTFILE = 'part1_backprop\\BACKPROP_LOG.txt'
 
 
 def initialize_instances(infile):
