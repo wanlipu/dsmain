@@ -22,7 +22,7 @@ INPUT_LAYER = 11
 HIDDEN_LAYER = 10
 OUTPUT_LAYER = 1
 TRAINING_ITERATIONS = 1001
-OUTFILE = 'XXX_LOG.txt'
+OUTFILE = 'part1-4_ga\\XXX_LOG.txt'
 
 
 def initialize_instances(infile):
@@ -83,7 +83,7 @@ def train(oa, network, oaName, training_ints,testing_ints, measure):
             with open(OUTFILE.replace('XXX',oaName),'a+') as f:
                 f.write(txt)
 
-def main(CE):
+def main(P,mate,mutate):
     """Run this experiment"""
     training_ints = initialize_instances('wine_train.csv')
     testing_ints = initialize_instances('wine_test.csv')
@@ -93,17 +93,20 @@ def main(CE):
     data_set = DataSet(training_ints)
     relu = RELU()
     rule = RPROPUpdateRule()
-    oa_name = "SA{}".format(CE)
+    oa_name = "GA_{}_{}_{}".format(P,mate,mutate)
     with open(OUTFILE.replace('XXX',oa_name),'w') as f:
         f.write('{},{},{},{},{},{}\n'.format('iteration','MSE_trg','MSE_tst','acc_trg','acc_tst','elapsed'))
     classification_network = factory.createClassificationNetwork([INPUT_LAYER, HIDDEN_LAYER, OUTPUT_LAYER],relu)
     nnop = NeuralNetworkOptimizationProblem(data_set, classification_network, measure)
-    oa = SimulatedAnnealing(1E10, CE, nnop)
+    oa = StandardGeneticAlgorithm(P, mate, mutate, nnop)
     train(oa, classification_network, oa_name, training_ints,testing_ints, measure)
         
 
 
 if __name__ == "__main__":
-    for CE in [0.15,0.35,0.55,0.70,0.95]:
-        main(CE)
+    for p in [50]:
+        for mate in [20,10]:
+            for mutate in [20,10]:
+                args = (p,mate,mutate)
+                main(*args)
 
