@@ -1,5 +1,5 @@
 """
-Backprop NN training on Madelon data (Feature selection complete)
+Backprop NN training on Wine data (Feature selection complete)
 
 """
 import os
