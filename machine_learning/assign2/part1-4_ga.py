@@ -85,8 +85,8 @@ def train(oa, network, oaName, training_ints,testing_ints, measure):
 
 def main(P,mate,mutate):
     """Run this experiment"""
-    training_ints = initialize_instances('wine_train.csv')
-    testing_ints = initialize_instances('wine_test.csv')
+    training_ints = initialize_instances('wine_train.txt')
+    testing_ints = initialize_instances('wine_test.txt')
     #validation_ints = initialize_instances('m_val.csv')
     factory = BackPropagationNetworkFactory()
     measure = SumOfSquaresError()
@@ -95,7 +95,7 @@ def main(P,mate,mutate):
     rule = RPROPUpdateRule()
     oa_name = "GA_{}_{}_{}".format(P,mate,mutate)
     with open(OUTFILE.replace('XXX',oa_name),'w') as f:
-        f.write('{},{},{},{},{},{}\n'.format('iteration','MSE_trg','MSE_tst','acc_trg','acc_tst','elapsed'))
+        f.write('{},{},{},{},{},{}\n'.format('iteration','training_MSE','testing_MSE','training_scores','testing_scores','time_elapsed'))
     classification_network = factory.createClassificationNetwork([INPUT_LAYER, HIDDEN_LAYER, OUTPUT_LAYER],relu)
     nnop = NeuralNetworkOptimizationProblem(data_set, classification_network, measure)
     oa = StandardGeneticAlgorithm(P, mate, mutate, nnop)

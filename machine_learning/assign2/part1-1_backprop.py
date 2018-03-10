@@ -85,8 +85,8 @@ def train(oa, network, oaName, training_ints,testing_ints, measure):
 
 def main():
     """Run this experiment"""
-    training_ints = initialize_instances('wine_train.csv')
-    testing_ints = initialize_instances('wine_test.csv')
+    training_ints = initialize_instances('wine_train.txt')
+    testing_ints = initialize_instances('wine_test.txt')
     #validation_ints = initialize_instances('m_val.csv')
     factory = BackPropagationNetworkFactory()
     measure = SumOfSquaresError()
@@ -101,6 +101,6 @@ def main():
 
 if __name__ == "__main__":
     with open(OUTFILE,'w') as f:
-        f.write('{},{},{},{},{},{},{},{}\n'.format('iteration','MSE_trg','MSE_val','MSE_tst','acc_trg','acc_val','acc_tst','elapsed'))
+        f.write('{},{},{},{},{},{}\n'.format('iteration','training_MSE','testing_MSE','training_scores','testing_scores','time_elapsed'))
     main()
 
